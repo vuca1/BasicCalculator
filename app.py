@@ -1,12 +1,7 @@
 import tkinter as tk
-from pickletools import decimalnl_long
-from traceback import print_tb
-
 
 def main():
-    global current_input
     global equation
-    current_input = ""
     equation = ""
 
     # Initialize the Tkinter GUI
@@ -19,7 +14,7 @@ def main():
     entry_box = tk.Entry(window, width=30)
     entry_box.grid(row=0, column=0, columnspan=4 ,padx= 20 ,pady=10)
 
-    # keep track of the equation
+    # adds something to the equation string
     def add_to_equation(value):
         global equation
         equation = str(equation)
@@ -27,7 +22,7 @@ def main():
         entry_box.delete(0, tk.END)
         entry_box.insert(0, equation)
 
-    # config the main label
+    # remove the entry_box and put a new value to it
     def change_label(value):
         global equation
         value = str(value)
@@ -36,15 +31,20 @@ def main():
 
     # delete last character from 'entry_box'
     def delete_last():
-        print("Deleting last")
-        # todo
+        global equation
+        equation = equation[:-1]
+        change_label(equation)
 
     # calculate function
     def calculate():
         global equation
-        equation = eval(equation)
-        print(equation)
-        change_label(equation)
+        try:
+            equation = eval(equation)
+            change_label(equation)
+        except Exception as e:
+            change_label(f"Error - {e}")
+            change_label("")
+
 
     # grid
     buttons = [
