@@ -1,4 +1,5 @@
 import tkinter as tk
+from pickletools import decimalnl_long
 from traceback import print_tb
 
 
@@ -86,6 +87,10 @@ def main():
     # back / delete button
     back_button = tk.Button(window, text="back", command=delete_last)
     back_button.grid(row=4, column=1, padx=3, pady=3)
+
+    # decimal button
+    decimal_button = tk.Button(window, text=".", command=lambda: add_to_equation("."))
+    decimal_button.grid(row=4, column=0, padx=3, pady=3)
 
     window.mainloop()
 
