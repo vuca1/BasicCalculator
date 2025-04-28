@@ -52,20 +52,20 @@ def main():
 
     # grid
     buttons = [
-            (" 1 ", 1, 0),
-            (" 2 ", 1, 1),
-            (" 3 ", 1, 2),
-            (" 4 ", 2, 0),
-            (" 5 ", 2, 1),
-            (" 6 ", 2, 2),
-            (" 7 ", 3, 0),
-            (" 8 ", 3, 1),
-            (" 9 ", 3, 2)
+            (" 1 ", 1, 0, "1"),
+            (" 2 ", 1, 1, "2"),
+            (" 3 ", 1, 2, "3"),
+            (" 4 ", 2, 0, "4"),
+            (" 5 ", 2, 1, "5"),
+            (" 6 ", 2, 2, "6"),
+            (" 7 ", 3, 0, "7"),
+            (" 8 ", 3, 1, "8"),
+            (" 9 ", 3, 2, "9")
         ]
 
     # number buttons - creates all buttons from 1 to 10(9)
-    for (text, row, col) in buttons:
-            num_button = tk.Button(window, text=text, command=lambda num=text: add_to_equation(num))
+    for (text, row, col, text2) in buttons:
+            num_button = tk.Button(window, text=text, command=lambda num=text2: add_to_equation(num))
             num_button.grid(row=row, column=col, padx=3, pady=3)
 
     # zero button
