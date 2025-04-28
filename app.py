@@ -1,7 +1,12 @@
 import tkinter as tk
+from traceback import print_tb
 
 
 def main():
+    global current_input
+    global equation
+    current_input = ""
+    equation = ""
 
     # Initialize the Tkinter GUI
     window = tk.Tk()
@@ -9,45 +14,78 @@ def main():
     window.geometry("230x200")
     window.resizable(False, False)
 
-    # main label / label
+    # main label / entry
     entry_box = tk.Entry(window, width=30)
     entry_box.grid(row=0, column=0, columnspan=4 ,padx= 20 ,pady=10)
 
+    # keep track of the equation
+    def add_to_equation(value):
+        global equation
+        equation = str(equation)
+        equation += str(value)
+        entry_box.delete(0, tk.END)
+        entry_box.insert(0, equation)
+
     # config the main label
-    def change_label(num):
-        entry_box.insert(tk.END, str(num))
+    def change_label(value):
+        global equation
+        value = str(value)
+        entry_box.delete(0, tk.END)
+        entry_box.insert(0, value)
 
-    #grid
-    buttons = [
-        ("1", 1, 0),
-        ("2", 1, 1),
-        ("3", 1, 2),
-        ("4", 2, 0),
-        ("5", 2, 1),
-        ("6", 2, 2),
-        ("7", 3, 0),
-        ("8", 3, 1),
-        ("9", 3, 2),
-        ("+", 1, 3),
-        ("-", 2, 3),
-        ("*", 3, 3),
-        ("/", 4, 3)
-    ]
-
-    # number buttons - creates all buttons from 1 to 10(9)
-    for (text, row, col) in buttons:
-        num_button = tk.Button(window, text=text, command=lambda num=text: change_label(num))
-        num_button.grid(row=row ,column=col, padx=3, pady=3)
+    # delete last character from 'entry_box'
+    def delete_last():
+        print("Deleting last")
+        # todo
 
     # calculate function
     def calculate():
-        entry_box.delete(0, tk.END) # set 'entry_box' empty
-        entry_box.insert(0, "calculating...")
+        global equation
+        equation = eval(equation)
+        print(equation)
+        change_label(equation)
+
+    # grid
+    buttons = [
+            ("1", 1, 0),
+            ("2", 1, 1),
+            ("3", 1, 2),
+            ("4", 2, 0),
+            ("5", 2, 1),
+            ("6", 2, 2),
+            ("7", 3, 0),
+            ("8", 3, 1),
+            ("9", 3, 2)
+        ]
+
+    # number buttons - creates all buttons from 1 to 10(9)
+    for (text, row, col) in buttons:
+            num_button = tk.Button(window, text=text, command=lambda num=text: add_to_equation(num))
+            num_button.grid(row=row, column=col, padx=3, pady=3)
+
+    # minus button
+    minus_button = tk.Button(window, text="-", command=lambda: add_to_equation("-"))
+    minus_button.grid(row=2, column=3, padx=3, pady=3)
+
+    # plus button
+    plus_button = tk.Button(window, text="+", command=lambda: add_to_equation("+"))
+    plus_button.grid(row=1, column=3, padx=3, pady=3)
+
+    # divide button
+    divide_button = tk.Button(window, text="/", command=lambda: add_to_equation("/"))
+    divide_button.grid(row=3, column=3, padx=3, pady=3)
+
+    # multiply button
+    multiply_button = tk.Button(window, text="*", command=lambda: add_to_equation("*"))
+    multiply_button.grid(row=4, column=3, padx=3, pady=3)
 
     # equals button
     equals_button = tk.Button(window, text="=", command=calculate)
     equals_button.grid(row=4, column=2, padx=3, pady=3)
 
+    # back / delete button
+    back_button = tk.Button(window, text="back", command=delete_last)
+    back_button.grid(row=4, column=1, padx=3, pady=3)
 
     window.mainloop()
 
