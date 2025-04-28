@@ -1,3 +1,4 @@
+import time
 import tkinter as tk
 
 def main():
@@ -43,6 +44,7 @@ def main():
             change_label(equation)
         except Exception as e:
             change_label(f"Error - {e}")
+            time.sleep(2)
             change_label("")
 
 
