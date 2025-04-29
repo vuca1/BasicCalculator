@@ -38,6 +38,33 @@ def main():
         equation = equation[:-1]
         change_label(equation)
 
+    def add_brackets():
+        global equation
+        equation = str(equation)
+        if equation == "":
+            add_to_equation("(")
+        else:
+            last_char = equation[-1]
+            if last_char == "(":
+                delete_last()
+                add_to_equation(")")
+            elif last_char == ")":
+                delete_last()
+                add_to_equation("(")
+            elif last_char != "(" and last_char != ")":
+                add_to_equation("(")
+
+
+    # round number
+    def round_number():
+        global equation
+        try:
+            equation = float(equation)
+            equation = round(equation)
+            change_label(equation)
+        except Exception as e:
+            change_label("Not a number - press Erase")
+
     # calculate function
     def calculate():
         global equation
@@ -48,6 +75,7 @@ def main():
             change_label(f"Error - {e}")
             time.sleep(2)
             change_label("")
+
 
 
     # grid
@@ -96,6 +124,10 @@ def main():
     back_button = tk.Button(window, text="Back", command=delete_last)
     back_button.grid(row=5, column=1, padx=3, pady=3)
 
+    # round button
+    round_button = tk.Button(window, text="Round", command=round_number)
+    round_button.grid(row=5, column=0, padx=3, pady=3)
+
     # erase button
     erase_button = tk.Button(window, text="Erase", command=lambda: change_label(""))
     erase_button.grid(row=5, column=2, padx=3, pady=3)
@@ -103,6 +135,10 @@ def main():
     # decimal button
     decimal_button = tk.Button(window, text=" . ", command=lambda: add_to_equation("."))
     decimal_button.grid(row=4, column=2, padx=3, pady=3)
+
+    # brackets button
+    bracket_button = tk.Button(window, text="()", command=add_brackets)
+    bracket_button.grid(row=4, column=0, padx=3, pady=3)
 
     window.mainloop()
 
